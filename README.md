@@ -2,7 +2,15 @@
 
 It switches wallpaper randomly from your own collection of pictures.
 
+NOTE: Windows defender prompt will come up only because this is an unsigned app. No need to panic. Either way, the code is all here if you are skeptical about it.
+
 ## App guide
+
+- Download `Wallpaper.zip` from the latest [release](https://github.com/hasan-abir/wallpaper-switcher/releases/tag/v1.0.0)
+- Extract it as usual, and run `Wallpaper.exe` to see it work
+- It choose from one of the pictures in the `Wallpapers` folder; so to add your own pictures to the mix, copy them to this folder
+- If you accidentally delete the folder, you can just run the .exe again for it generate the folder (note: without the `_internal` folder the exe won't work)
+- You can schedule a task to run this exe, for example, every morning to get a new picture for the day.
 
 ## Developer guide
 
