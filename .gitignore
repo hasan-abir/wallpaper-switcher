@@ -3,3 +3,4 @@ dist
 env
 *.spec
 Wallpapers
+**/__pycache__/

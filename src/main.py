@@ -2,7 +2,7 @@ from pathlib import Path
 from PIL import Image
 import ctypes
 import random
-
+import winreg
 
 images_to_choose_from = []
 
@@ -42,6 +42,10 @@ def set_desktop_background():
         image_chosen = str(images_to_choose_from[randomIndex])
 
         ctypes.windll.user32.SystemParametersInfoW(20, 0, image_chosen, 0)
+
+        key = winreg.OpenKey(winreg.HKEY_CURRENT_USER, r"Control Panel\Desktop", 0, winreg.KEY_SET_VALUE)
+        winreg.SetValueEx(key, "Wallpaper", 0, winreg.REG_SZ, image_chosen)
+        winreg.CloseKey(key)
 
 set_desktop_background()
 
