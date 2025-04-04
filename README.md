@@ -6,7 +6,7 @@ NOTE: Windows defender prompt will come up only because this is an unsigned app.
 
 ## App guide
 
-- Download `Wallpaper.zip` from the latest [release](https://github.com/hasan-abir/wallpaper-switcher/releases/tag/v1.0.0)
+- Download `Wallpaper.zip` from the latest [release](https://github.com/hasan-abir/wallpaper-switcher/releases)
 - Extract it as usual, and run `Wallpaper.exe` to see it work
 - It choose from one of the pictures in the `Wallpapers` folder; so to add your own pictures to the mix, copy them to this folder
 - If you accidentally delete the folder, you can just run the .exe again for it generate the folder (note: without the `_internal` folder the exe won't work)
