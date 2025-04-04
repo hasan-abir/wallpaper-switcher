@@ -1,5 +1,5 @@
 import unittest
-from src.main import createNewFolder, images_to_choose_from, search_and_populate_images, set_desktop_background
+from src.main import createNewFolder, images_to_choose_from, search_and_populate_images, set_desktop_background, randomizeImage
 from pathlib import Path
 from PIL import Image
 import shutil
@@ -14,6 +14,7 @@ class TestMain(unittest.TestCase):
     def tearDown(self):
         path = Path(str(Path.cwd()) + '\\Wallpapers')
         if path.exists():
+            images_to_choose_from.clear()
             shutil.rmtree(str(path))
 
     def test_folder_creation(self):
@@ -43,13 +44,35 @@ class TestMain(unittest.TestCase):
 
         self.assertEqual(len(images_to_choose_from), 10)
 
+    def test_randomize_image(self):
+        newFolder = createNewFolder()
+
+        for i in range(10):
+            image_path = str(newFolder) + f"\\dummy_image_{i+1}.png"
+
+            create_dummy_image(image_path)
+
+        search_and_populate_images()
+
+        image_chosen = randomizeImage()
+
+        self.assertTrue(image_chosen.endswith('.png'))
+
     @patch('random.randint')
     @patch('ctypes.windll.user32.SystemParametersInfoW')
     @patch("winreg.CloseKey")
     @patch("winreg.SetValueEx")
+    @patch("winreg.QueryValueEx")
     @patch("winreg.OpenKey")
-    def test_set_desktop_background(self, mock_openkey, mock_setvalueex, mock_closekey, mock_system_params,  mock_random):
+    def test_set_desktop_background(self, mock_openkey, mock_queryvalueex, mock_setvalueex, mock_closekey, mock_system_params,  mock_random):
         newFolder = createNewFolder()
+        for i in range(10):
+            image_path = str(newFolder) + f"\\dummy_image_{i+1}.png"
+
+            create_dummy_image(image_path)
+
+        search_and_populate_images()
+
 
         mock_key = MagicMock()
         mock_openkey.return_value = mock_key
@@ -60,7 +83,7 @@ class TestMain(unittest.TestCase):
         image_path = str(newFolder) + '\\dummy_image_1.png'
         
         mock_system_params.assert_called_with(20, 0, image_path, 0)
-        mock_openkey.assert_called_once_with(winreg.HKEY_CURRENT_USER, r"Control Panel\Desktop", 0, winreg.KEY_SET_VALUE)
+        mock_openkey.assert_called_with(winreg.HKEY_CURRENT_USER, r"Control Panel\Desktop", 0, winreg.KEY_SET_VALUE)
         mock_setvalueex.assert_called_once_with(mock_key, "Wallpaper", 0, winreg.REG_SZ, image_path)
         mock_closekey.assert_called_once_with(mock_key)
 
